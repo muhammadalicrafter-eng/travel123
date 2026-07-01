@@ -9,9 +9,11 @@ import {
 } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, PlaneTakeoff, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
 import { PhoneLink } from "@/components/ui/phone-link";
 import { cn } from "@/lib/utils";
+import { ROUTES } from "@/lib/routes";
 import {
   NAV_SECTIONS,
   navHref,
@@ -22,6 +24,33 @@ import {
   type NavSectionId,
 } from "@/lib/scroll";
 import { useSlidingIndicator } from "@/hooks/use-sliding-indicator";
+
+function NavPageLink({
+  href,
+  label,
+  active,
+  register,
+  onNavigate,
+  className,
+}: {
+  href: string;
+  label: string;
+  active: boolean;
+  register: (key: string) => (el: HTMLElement | null) => void;
+  onNavigate?: () => void;
+  className?: string;
+}) {
+  return (
+    <Link
+      ref={register(href)}
+      href={href}
+      onClick={onNavigate}
+      className={cn(className, active ? "nav-tab-active" : "nav-tab-inactive")}
+    >
+      {label}
+    </Link>
+  );
+}
 
 function NavTab({
   id,
@@ -71,8 +100,10 @@ export function Navbar() {
   const scrollSpyCooldownRef = useRef(0);
 
   const isHomePage = pathname === "/";
-  const activeKey =
-    NAV_SECTIONS.find((l) => l.id === activeSection)?.hash ?? "";
+  const isAboutPage = pathname === ROUTES.about;
+  const activeKey = isAboutPage
+    ? ROUTES.about
+    : (NAV_SECTIONS.find((l) => l.id === activeSection)?.hash ?? "");
 
   const desktopIndicator = useSlidingIndicator(activeKey, desktopNavRef);
   const mobileIndicator = useSlidingIndicator(activeKey, mobileNavRef);
@@ -219,29 +250,24 @@ export function Navbar() {
     >
       <nav
         aria-label="Main navigation"
-        className="mx-auto flex h-[4.25rem] max-w-7xl items-center justify-between gap-6 px-5 sm:px-6 lg:px-10"
+        className="mx-auto flex h-[4.75rem] max-w-7xl items-center justify-between gap-6 px-5 sm:px-6 lg:px-10"
       >
         {isHomePage ? (
           <button
             type="button"
-            className="group flex shrink-0 items-center gap-2.5"
+            className="group shrink-0 transition-transform duration-200 hover:scale-[1.02]"
             onClick={handleLogoSelect}
+            aria-label="Get A Ticket — go to top"
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-kingfisher text-white shadow-[0_4px_12px_-4px_rgba(30,147,216,0.5)] transition-transform duration-200 group-hover:scale-[1.03]">
-              <PlaneTakeoff className="h-4 w-4 -rotate-12" />
-            </span>
-            <span className="font-display text-xl font-semibold tracking-tight text-ink">
-              Skyward
-            </span>
+            <Logo />
           </button>
         ) : (
-          <Link href="/" className="group flex shrink-0 items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-kingfisher text-white shadow-[0_4px_12px_-4px_rgba(30,147,216,0.5)] transition-transform duration-200 group-hover:scale-[1.03]">
-              <PlaneTakeoff className="h-4 w-4 -rotate-12" />
-            </span>
-            <span className="font-display text-xl font-semibold tracking-tight text-ink">
-              Skyward
-            </span>
+          <Link
+            href="/"
+            className="group shrink-0 transition-transform duration-200 hover:scale-[1.02]"
+            aria-label="Get A Ticket — home"
+          >
+            <Logo />
           </Link>
         )}
 
@@ -266,12 +292,19 @@ export function Navbar() {
               key={l.id}
               id={l.id}
               label={l.label}
-              active={activeSection === l.id}
+              active={!isAboutPage && activeSection === l.id}
               register={desktopIndicator.register}
               onSelect={handleSectionSelect}
               className="nav-tab"
             />
           ))}
+          <NavPageLink
+            href={ROUTES.about}
+            label="About"
+            active={isAboutPage}
+            register={desktopIndicator.register}
+            className="nav-tab"
+          />
         </div>
 
         <PhoneLink className="shrink-0" />
@@ -290,7 +323,7 @@ export function Navbar() {
       {open && (
         <>
           <div
-            className="fixed inset-0 top-[4.25rem] bg-ink/20 lg:hidden"
+            className="fixed inset-0 top-[4.75rem] bg-ink/20 lg:hidden"
             onClick={closeMenu}
             aria-hidden
           />
@@ -316,12 +349,20 @@ export function Navbar() {
                     key={l.id}
                     id={l.id}
                     label={l.label}
-                    active={activeSection === l.id}
+                    active={!isAboutPage && activeSection === l.id}
                     register={mobileIndicator.register}
                     onSelect={handleSectionSelect}
                     className="nav-mobile-tab w-full text-left"
                   />
                 ))}
+                <NavPageLink
+                  href={ROUTES.about}
+                  label="About"
+                  active={isAboutPage}
+                  register={mobileIndicator.register}
+                  onNavigate={closeMenu}
+                  className="nav-mobile-tab w-full text-left"
+                />
               </div>
             </div>
           </div>

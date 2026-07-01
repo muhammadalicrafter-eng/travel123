@@ -1,6 +1,7 @@
 "use client";
 
-import { AtSign, Globe2, Mail, MapPin, Phone, PlaneTakeoff, Share2 } from "lucide-react";
+import { AtSign, Globe2, Mail, MapPin, Phone, Share2 } from "lucide-react";
+import { FooterLogo } from "@/components/ui/logo";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact";
 import { ROUTES } from "@/lib/routes";
 import { cn } from "@/lib/utils";
@@ -12,7 +13,6 @@ const QUICK_LINKS = [
   { label: "Tours", href: "/#tours" },
   { label: "Why Us", href: "/#why-us" },
   { label: "Reviews", href: "/#reviews" },
-  { label: "Airlines", href: "/#airlines" },
 ];
 
 const LEGAL_LINKS = [
@@ -41,12 +41,9 @@ export function Footer() {
           <div className={FOOTER_COLUMN_MOBILE_CENTER}>
             <a
               href="/"
-              className="mb-4 flex items-center justify-center gap-2 sm:justify-start"
+              className="mb-5 flex items-center justify-center sm:justify-start"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-kingfisher text-white">
-                <PlaneTakeoff className="h-4 w-4 -rotate-12" />
-              </span>
-              <span className="font-display text-xl font-semibold">Skyward</span>
+              <FooterLogo />
             </a>
             <p className="mx-auto max-w-sm text-sm leading-relaxed text-cloud/55 sm:mx-0">
               Get A Ticket is an independent travel agency and travel booking

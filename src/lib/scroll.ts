@@ -6,7 +6,6 @@ export const NAV_SECTIONS = [
   { id: "tours", label: "Tours", hash: "#tours" },
   { id: "why-us", label: "Why Us", hash: "#why-us" },
   { id: "reviews", label: "Reviews", hash: "#reviews" },
-  { id: "airlines", label: "Airlines", hash: "#airlines" },
 ] as const;
 
 export type NavSectionId = (typeof NAV_SECTIONS)[number]["id"];
