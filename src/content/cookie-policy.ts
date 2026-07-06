@@ -3,7 +3,7 @@ import type { LegalDocumentContent } from "@/content/legal-types";
 export const cookiePolicy = {
   title: "Cookie Policy",
   intro: [
-    "This Cookie Policy explains how Get A Ticket uses cookies and similar technologies when you visit our website.",
+    "This Cookie Policy Get a Ticket explains how Get A Ticket uses cookies and similar technologies when you visit our website.",
     "By continuing to use our website, you agree to the use of cookies as described in this policy, unless you choose to disable them through your browser settings.",
   ],
   sections: [
