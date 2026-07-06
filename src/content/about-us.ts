@@ -9,7 +9,7 @@ export type AboutSection = {
 export const aboutUs = {
   title: "About Us",
   intro: [
-    "This is Unique and fully Update website. This is independent Travel Agenecy."
+    "This is Unique and fully Update website. This is independent Travel Agenecy.",
     "At Get A Ticket, we help travellers across the United Kingdom find competitive flight and holiday options for destinations around the world.",
     "Our goal is simple: to make travel planning easier by connecting customers with flight and holiday deals that suit their budget and travel preferences. Whether you're planning a family holiday, a city break, a business trip, or a last-minute getaway, our team is here to assist you.",
   ],
